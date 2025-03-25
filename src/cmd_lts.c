@@ -72,31 +72,19 @@ int cmd_mode()
 				case	0	: 				/* on */
 
 					pipe_value[1] = LTS_MODE_SET;
-#ifdef SINGLE_THREADED
 					lts_loop(pipe_value);
-#else
-					write_pipe(KS.lts_pipe,pipe_value,3);
-#endif
 					break;
 
 				case	1	:				/* off */
 
 					pipe_value[1] = LTS_MODE_CLEAR;
-#ifdef SINGLE_THREADED
 					lts_loop(pipe_value);
-#else
-					write_pipe(KS.lts_pipe,pipe_value,3);
-#endif
 					break;
 
 				case	2	:				/* set */
 
 					pipe_value[1] = LTS_MODE_ABS;
-#ifdef SINGLE_THREADED
 					lts_loop(pipe_value);
-#else
-					write_pipe(KS.lts_pipe,pipe_value,3);
-#endif
 					break;
 
 				case	3	:				/* minus */
@@ -158,11 +146,7 @@ int cmd_mode()
 			default	:
 				return(CMD_bad_value);
 			}
-#ifdef SINGLE_THREADED
 		lts_loop(pipe_value);
-#else
-		write_pipe(KS.lts_pipe,pipe_value,3);
-#endif
 		return(CMD_success);
 		}
 }
@@ -207,11 +191,7 @@ int cmd_pronounce()
 					pipe_value[1] = LTS_DIC_PRIMARY;
 					break;
 				};
-#ifdef SINGLE_THREADED
 			lts_loop(pipe_value);
-#else
-			write_pipe(KS.lts_pipe,pipe_value,2);
-#endif
 		}
 		}
 	else
@@ -235,11 +215,7 @@ int cmd_pronounce()
 				pipe_value[1] = LTS_DIC_PRIMARY;
 				break;
 			}
-#ifdef SINGLE_THREADED
 		lts_loop(pipe_value);
-#else
-		write_pipe(KS.lts_pipe,pipe_value,2);
-#endif
 	}
 	return(CMD_success);
 }

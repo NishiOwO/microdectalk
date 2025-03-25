@@ -46,11 +46,7 @@ int cmd_rate()
 
 	pipe_value[0] = (1<<PSNEXTRA) + RATE;
 	pipe_value[1] = params[0];
-#ifdef SINGLE_THREADED
 	lts_loop(pipe_value);
-#else
-	write_pipe(KS.lts_pipe,pipe_value,2);
-#endif
 	return(CMD_success);
 
 }
@@ -80,11 +76,7 @@ int cmd_name()
 	if((pipe_value[1] >= 0) && (pipe_value[1] < MAX_VOICES))
 		{
 		pipe_value[0] = (1<<PSNEXTRA) + NEW_SPEAKER;
-#ifdef SINGLE_THREADED
 		lts_loop(pipe_value);
-#else
-		write_pipe(KS.lts_pipe,pipe_value,2);
-#endif
 		return(CMD_success);
 		}
 	if(esc_command == false)
@@ -98,11 +90,7 @@ int cmd_latin()
 	unsigned short pipe_value[2];
 	pipe_value[0] = (1<<PSNEXTRA) + CPAUSE;
 	pipe_value[1] = params[0];
-#ifdef SINGLE_THREADED
 	lts_loop(pipe_value);
-#else
-	write_pipe(KS.lts_pipe,pipe_value,2);
-#endif
 	return(CMD_success);
 }
 
@@ -116,11 +104,7 @@ int cmd_comma()
 
 	pipe_value[0] = (1<<PSNEXTRA) + CPAUSE;
 	pipe_value[1] = params[0];
-#ifdef SINGLE_THREADED
 	lts_loop(pipe_value);
-#else
-	write_pipe(KS.lts_pipe,pipe_value,2);
-#endif
 	return(CMD_success);
 }
 
@@ -134,11 +118,7 @@ int cmd_period()
 
 	pipe_value[0] = (1<<PSNEXTRA) + PPAUSE;
 	pipe_value[1] = params[0];
-#ifdef SINGLE_THREADED
 	lts_loop(pipe_value);
-#else
-	write_pipe(KS.lts_pipe,pipe_value,2);
-#endif
 	return(CMD_success);
 }
 

@@ -572,11 +572,7 @@ int readphone(short buf[],short *input_phone)
 
    while(true)
    {
-#ifdef SINGLE_THREADED
 		buf[0]=input_phone[0];
-#else
-		read_pipe(kinp,&buf[0],1);
-#endif
 #ifdef GLD
 printf("\n(%d)",buf[0]&0xff);
 #endif
@@ -584,13 +580,9 @@ printf("\n(%d)",buf[0]&0xff);
       buf[0] &= ~PNEXTRA;
       for(i=1;i <= nextra;i++)
       {
-#ifdef SINGLE_THREADED
 		  /* This was reading the same indexed phone for each pass (input_phone[0]),
 		     but should be reading successive phones (input_phone[i]) */
 		  buf[i]=input_phone[i];
-#else
-		  read_pipe(kinp,&buf[i],1);
-#endif
 
 #ifdef GLD
 printf("\n(*%d)",buf[i]&0xff);

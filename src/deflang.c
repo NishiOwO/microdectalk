@@ -65,10 +65,6 @@ int default_lang(unsigned int lang_code, unsigned int ready_code) {
 	if (ready_code==LANG_both_ready)
 	{
 		KS.lang_curr = lang_code;
-#ifndef SINGLE_THREADED
-		KS.lts_pipe = KS.lang_lts[lang_code];
-		KS.ph_pipe = KS.lang_ph[lang_code];
-#endif
 
 #ifdef FULL_LANGUAGE_SUPPORT
 		cp = KS.loaded_languages;
@@ -96,10 +92,6 @@ int default_lang(unsigned int lang_code, unsigned int ready_code) {
 	if(KS.lang_ready[lang_code] == LANG_both_ready && (KS.lang_curr == LANG_none || ready_code == 0))
 		{
 		KS.lang_curr = lang_code;
-#ifndef SINGLE_THREADED
-		KS.lts_pipe = KS.lang_lts[lang_code];
-		KS.ph_pipe = KS.lang_ph[lang_code];
-#endif
 		cp = KS.loaded_languages;
 		while(cp != NULL_LT)
 			{

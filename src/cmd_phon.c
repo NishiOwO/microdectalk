@@ -172,11 +172,7 @@ int flush_phone()
 	if(param_index && (KS.phoneme_mode & PHONEME_SPEAK))
 		{
 		params[0] = params[0] | (PFUSA<<PSFONT) | ((param_index-1)<<PSNEXTRA);
-#ifdef SINGLE_THREADED
 		lts_loop(params);
-#else
-		write_pipe(KS.lts_pipe,params,param_index);
-#endif
 	}
 	param_index = 0;
 	p_flag = 0;

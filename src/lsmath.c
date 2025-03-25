@@ -39,9 +39,6 @@
 
 /*
  */
-#ifndef SINGLE_THREADED
-extern	P_PIPE	kinp;
-#endif
 
 #ifdef MATH_MODE
 struct math_symbols {
@@ -173,11 +170,7 @@ unsigned char *str;
 		for(i=0;i<NATAB;i++)
 			if(*str == ascky_tab[i].p_graph)
 				{
-#ifdef SINGLE_THREADED
 				lts_loop((short unsigned int *) &ascky_tab[i].p_phone);
-#else
-				write_pipe(kinp,&ascky_tab[i].p_phone,1);
-#endif
 				break;
 				}
 		str += 1;

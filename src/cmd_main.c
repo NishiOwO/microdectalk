@@ -385,10 +385,6 @@ int main()
 	KS.pitch_delta = 35;
 	insertflag=0;
 
-//#ifndef SINGLE_THREADED
-//	create_process(dtpc_cmd,2,data_seg,stack_start,0); /* tek 10/31 */
-//#endif
-
 //#ifdef	SIMULATOR
 //	printf ("cmdmain: exit\n");
 //#endif

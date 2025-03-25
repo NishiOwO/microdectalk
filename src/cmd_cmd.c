@@ -505,17 +505,9 @@ int cmd_sync()
 		{
 		KS.spc_sync.value = 0;
 		pipe_value = (PFASCII<<PSFONT)+0xb;
-#ifdef SINGLE_THREADED
 		lts_loop(&pipe_value);
-#else
-		write_pipe(KS.lts_pipe,&pipe_value,1);
-#endif
 		pipe_value = SYNC;
-#ifdef SINGLE_THREADED
 		lts_loop(&pipe_value);
-#else
-		write_pipe(KS.lts_pipe,&pipe_value,1);
-#endif
 		//		kernel_enable(old_flags);
 #ifndef	SIMULATOR
 		wait_semaphore(&KS.spc_sync);
@@ -539,17 +531,9 @@ int cmd_enable()
 		{
 		KS.spc_sync.value = 0;
 		pipe_value = (PFASCII<<PSFONT)+0xb;
-#ifdef SINGLE_THREADED
 		lts_loop(&pipe_value);
-#else
-		write_pipe(KS.lts_pipe,&pipe_value,1);
-#endif
 		pipe_value = SYNC;
-#ifdef SINGLE_THREADED
 		lts_loop(&pipe_value);
-#else
-		write_pipe(KS.lts_pipe,&pipe_value,1);  
-#endif
 		//		kernel_enable(old_flags);
 #ifndef	SIMULATOR
 		wait_semaphore(&KS.spc_sync);
@@ -852,24 +836,6 @@ int cmd_language()
 	default_lang(cmd_type,0);
 	pipe_value = LAST_VOICE;
 	write_pipe(KS.lts_pipe,&pipe_value,1);
-	return(CMD_success);
-}
-#endif
-
-#ifndef SINGLE_THREADED
-int cmd_remove()
-{
-	unsigned int pipe_value;
-
-	KS.lang_ready[KS.lang_curr] = 0;
-	pipe_value = KILL_TASK;
-#ifdef SINGLE_THREADED
-	lts_loop(&pipe_value);
-#else
-	write_pipe(KS.lts_pipe,&pipe_value,1);
-#endif
-	KS.lts_pipe = NULL_PIPE;
-	KS.ph_pipe = NULL_PIPE;
 	return(CMD_success);
 }
 #endif

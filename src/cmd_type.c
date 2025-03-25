@@ -54,19 +54,11 @@ unsigned int c;
 	unsigned int phone;
 
 	phone = LAST_VOICE;
-#ifdef SINGLE_THREADED
 		ph_loop((short int *)&phone);
-#else
-	write_pipe(KS.ph_pipe,&phone,1);
-#endif
 	for(tp = (unsigned char _far *)KS.typing_table[c];*tp;tp+=1)
 		{
 		phone = KS.reverse_ascky[(*tp) & 0xff];
-#ifdef SIMULATOR
 		sendphone(phone);
-#else
-		write_pipe(KS.ph_pipe,&phone,1);
-#endif
 		}
 #ifdef SIMULATOR
 	sendphone(COMMA);

@@ -126,12 +126,7 @@ int icommand(void)
 }
 
 
-#ifdef SINGLE_THREADED
-int dtpc_cmd(unsigned char inchar)
-#else
-int dtpc_cmd()
-#endif
-{
+int dtpc_cmd(unsigned char inchar) {
 //	int     i,j;
 	short pipe_value;
 
@@ -139,9 +134,6 @@ int dtpc_cmd()
 	putc(XON);
 #endif /*DTEX*/
 /* This has to be changed to get the character from an array */
-#ifndef SINGLE_THREADED
-	while(true)
-#endif
 	{
 /* GL 11/07/1996, fix the DTEX [:index reply xx] DTPC [:say letter] bug */
 /*#ifdef DTEX*/ /* see comment above at declaration of bracket_space.. */
@@ -431,11 +423,7 @@ void process_char(unsigned int c)
 							case    SAY_SYLLABLE    :
 
 							pipe_value = (PFASCII<<PSFONT)+c;
-#ifdef SINGLE_THREADED
 							lts_loop(&pipe_value);
-#else
-							write_pipe(KS.lts_pipe,&pipe_value,1);
-#endif
 							break;
 
 							case    SAY_WORD        :
@@ -448,18 +436,10 @@ void process_char(unsigned int c)
                                                                     c != 0xaa && c != 0xba)
 								{
 								pipe_value = (PFASCII<<PSFONT)+0xb;
-#ifdef SINGLE_THREADED
 								lts_loop(&pipe_value);
-#else
-								write_pipe(KS.lts_pipe,&pipe_value,1);
-#endif
 								}
 							pipe_value = (PFASCII<<PSFONT)+c;
-#ifdef SINGLE_THREADED
 							lts_loop(&pipe_value);
-#else
-							write_pipe(KS.lts_pipe,&pipe_value,1);
-#endif
 							break;
 	
 							case    SAY_LETTER      :
@@ -471,11 +451,7 @@ void process_char(unsigned int c)
 							if(c == CR || c == LF)
 								c = 0xb;
 							pipe_value = (PFASCII<<PSFONT)+c;
-#ifdef SINGLE_THREADED
 							lts_loop(&pipe_value);
-#else
-							write_pipe(KS.lts_pipe,&pipe_value,1);
-#endif
 							break;
 							}
 							
@@ -551,11 +527,7 @@ void process_char(unsigned int c)
 		printf("CMD_PARS: process_char: Default: switch(punct_mode): PUNCT_pass sending %c \n",c);
 #endif
 								pipe_value = (PFASCII<<PSFONT)+c;
-#ifdef SINGLE_THREADED
 								lts_loop(&pipe_value);
-#else
-								write_pipe(KS.lts_pipe,&pipe_value,1);
-#endif
 								}
 							return;
 
@@ -565,17 +537,9 @@ void process_char(unsigned int c)
 		printf("CMD_PARS: process_char: Default: switch(punct_mode): PUNC_all write_all\n");
 #endif
 						pipe_value = (PFASCII<<PSFONT)+' ';
-#ifdef SINGLE_THREADED
 						lts_loop(&pipe_value);
-#else
-						write_pipe(KS.lts_pipe,&pipe_value,1);
-#endif
 						pipe_value = (PFASCII<<PSFONT)+c;
-#ifdef SINGLE_THREADED
 						lts_loop(&pipe_value);
-#else
-						write_pipe(KS.lts_pipe,&pipe_value,1);
-#endif
 						if(char_types[c] & MARK_clause)
 							{
 #ifdef DEBUGPARS
@@ -583,11 +547,7 @@ void process_char(unsigned int c)
 #endif
 
 							pipe_value = (PFASCII<<PSFONT)+0xb;
-#ifdef SINGLE_THREADED
 							lts_loop(&pipe_value);
-#else
-							write_pipe(KS.lts_pipe,&pipe_value,1);
-#endif
 						}
 						c = ' ';
 						} /* end switch(punct_mode) */
@@ -614,11 +574,7 @@ void process_char(unsigned int c)
 #endif
 
 								pipe_value = (PFASCII<<PSFONT)+c;
-#ifdef SINGLE_THREADED
 								lts_loop(&pipe_value);
-#else
-								write_pipe(KS.lts_pipe,&pipe_value,1);
-#endif
 							}
 						return;
 						}
@@ -653,11 +609,7 @@ void process_char(unsigned int c)
 #endif
 
 							pipe_value = (PFASCII<<PSFONT)+last_punct;
-#ifdef SINGLE_THREADED
 							lts_loop(&pipe_value);
-#else
-							write_pipe(KS.lts_pipe,&pipe_value,1);
-#endif
 #ifdef DEBUGPARS
 		printf("CMD_PARS: process_char: STATE_NORMAL Case: sending dash from dash proc code\n");
 #endif
@@ -665,11 +617,7 @@ void process_char(unsigned int c)
 						else
 							{
 							pipe_value = (PFASCII<<PSFONT)+' ';
-#ifdef SINGLE_THREADED
 							lts_loop(&pipe_value);
-#else
-							write_pipe(KS.lts_pipe,&pipe_value,1);
-#endif
 #ifdef DEBUGPARS
 		printf("CMD_PARS: process_char: STATE_NORMAL: sending space for dash from dash code\n");
 #endif
@@ -770,12 +718,7 @@ void process_char(unsigned int c)
 		printf("CMD_PARS: process_char: writing heldchar 0 %c\n",heldchar[0]);
 #endif
 								pipe_value = (PFASCII<<PSFONT)+heldchar[0];
-#ifdef SINGLE_THREADED
 								lts_loop(&pipe_value);
-#else
-								write_pipe(KS.lts_pipe,&pipe_value,1);
-#endif
-
 
 								if(posord == 2)
 									{
@@ -784,11 +727,7 @@ void process_char(unsigned int c)
 #endif
 
 									pipe_value = (PFASCII<<PSFONT)+heldchar[1];
-#ifdef SINGLE_THREADED
 									lts_loop(&pipe_value);
-#else
-									write_pipe(KS.lts_pipe,&pipe_value,1);
-#endif
 								}
 								}
 							else
@@ -824,11 +763,7 @@ void process_char(unsigned int c)
 					  {
 					    isadigit=1;
 					    pipe_value = (PFASCII<<PSFONT)+' ';
-#ifdef SINGLE_THREADED
 						lts_loop(&pipe_value);
-#else
-					    write_pipe(KS.lts_pipe,&pipe_value,1);
-#endif
 #ifdef DEBUGPARS
 		printf("CMD_PARS: process_char: Write_Pipe: Breaking out number with a space. \n");
 #endif
@@ -956,11 +891,7 @@ skipit:         sendat();
 					case    SAY_SYLLABLE    :
 
 						pipe_value = (PFASCII<<PSFONT)+c;
-#ifdef SINGLE_THREADED
 						lts_loop(&pipe_value);
-#else
-						write_pipe(KS.lts_pipe,&pipe_value,1);
-#endif
 						break;
 
 					case    SAY_WORD        :
@@ -968,18 +899,10 @@ skipit:         sendat();
 						if((char_types[c] & (MARK_vowel|MARK_cons|MARK_digit)) == false)
 							{
 							pipe_value = (PFASCII<<PSFONT)+0xb;
-#ifdef SINGLE_THREADED
 							lts_loop(&pipe_value);
-#else
-							write_pipe(KS.lts_pipe,&pipe_value,1);
-#endif
 						}
 						pipe_value = (PFASCII<<PSFONT)+c;
-#ifdef SINGLE_THREADED
 						lts_loop(&pipe_value);
-#else
-						write_pipe(KS.lts_pipe,&pipe_value,1);
-#endif
 						break;
 	
 					case    SAY_LETTER      :
@@ -991,11 +914,7 @@ skipit:         sendat();
 						if(c == CR || c == LF)
 							c = 0xb;
 						pipe_value = (PFASCII<<PSFONT)+c;
-#ifdef SINGLE_THREADED
 						lts_loop(&pipe_value);
-#else
-						write_pipe(KS.lts_pipe,&pipe_value,1);
-#endif						break;
 					
 					
 					}
@@ -1013,11 +932,7 @@ skipit:         sendat();
 		if(c == 0xb)
 			{
 			pipe_value = SYNC;
-#ifdef SINGLE_THREADED
 			lts_loop(&pipe_value);
-#else
-			write_pipe(KS.lts_pipe,&pipe_value,1);
-#endif
 		}
 
 }
@@ -1640,11 +1555,7 @@ void sendit(void)
 					|| cbuf[k]=='.' && ((cbuf[k-1] >= '0'&& cbuf[k-1] <= '9') || ( cbuf[k+1] >= '0' && cbuf[k+1] <= '9')) )
 				{
 					pipe_value = (PFASCII << PSFONT) + cbuf[k];
-#ifdef SINGLE_THREADED
 					lts_loop(&pipe_value);
-#else
-					write_pipe(KS.lts_pipe,&pipe_value,1);
-#endif
 #ifdef DEBUGPARS
 					printf("CMD_PARS: sendit: sending3 %c %d\n",cbuf[k],cbuf[k]);
 #endif
@@ -1670,11 +1581,7 @@ void sendit(void)
 #endif
 			
 			pipe_value = (PFASCII << PSFONT) + ' ';
-#ifdef SINGLE_THREADED
 			lts_loop(&pipe_value);
-#else
-			write_pipe(KS.lts_pipe,&pipe_value,1);
-#endif
 		}
 	}
 	else
@@ -1696,20 +1603,11 @@ void sendit(void)
 			}
 			if(cbuf[k] == '.' || cbuf[k] == ',' )
 			{
-				
 				k++;
 				pipe_value = (PFASCII << PSFONT) + '.';
-#ifdef SINGLE_THREADED
 				lts_loop(&pipe_value);
-#else
-				write_pipe(KS.lts_pipe,&pipe_value,1);
-#endif
 				pipe_value = (PFASCII << PSFONT) + ' ';
-#ifdef SINGLE_THREADED
 				lts_loop(&pipe_value);
-#else
-				write_pipe(KS.lts_pipe,&pipe_value,1);
-#endif
 			}
 			else if(cbuf[k] == ' ')
 			{
@@ -1717,33 +1615,17 @@ void sendit(void)
 				{
 					justone=1;
 					pipe_value = (PFASCII << PSFONT) + ',';
-#ifdef SINGLE_THREADED
 					lts_loop(&pipe_value);
-#else
-					write_pipe(KS.lts_pipe,&pipe_value,1);
-#endif
 				}
 				pipe_value = (PFASCII << PSFONT) + ' ';
-#ifdef SINGLE_THREADED
 				lts_loop(&pipe_value);
-#else
-				write_pipe(KS.lts_pipe,&pipe_value,1);
-#endif
 			}
 			else
 			{
 				pipe_value = (PFASCII << PSFONT) + ' ';
-#ifdef SINGLE_THREADED
 				lts_loop(&pipe_value);
-#else
-				write_pipe(KS.lts_pipe,&pipe_value,1);
-#endif
 				pipe_value = (PFASCII << PSFONT) + cbuf[k];
-#ifdef SINGLE_THREADED
 				lts_loop(&pipe_value);
-#else
-				write_pipe(KS.lts_pipe,&pipe_value,1);
-#endif
 				justone=0;
 			}
 #ifdef DEBUGPARS
@@ -1773,35 +1655,15 @@ int offset,k;
 			&& modechng == 0  )
 		{
 			pipe_value = (PFASCII << PSFONT) + ' ';
-#ifdef SINGLE_THREADED
 			lts_loop(&pipe_value);
-#else
-			write_pipe(KS.lts_pipe,&pipe_value,1);
-#endif
 			pipe_value = (PFASCII << PSFONT) + 'd';
-#ifdef SINGLE_THREADED
 			lts_loop(&pipe_value);
-#else
-			write_pipe(KS.lts_pipe,&pipe_value,1);
-#endif
 			pipe_value = (PFASCII << PSFONT) + 'o';
-#ifdef SINGLE_THREADED
 			lts_loop(&pipe_value);
-#else
-			write_pipe(KS.lts_pipe,&pipe_value,1);
-#endif
 			pipe_value = (PFASCII << PSFONT) + 't';
-#ifdef SINGLE_THREADED
 			lts_loop(&pipe_value);
-#else
-			write_pipe(KS.lts_pipe,&pipe_value,1);
-#endif
 			pipe_value = (PFASCII << PSFONT) + ' ';
-#ifdef SINGLE_THREADED
 			lts_loop(&pipe_value);
-#else
-			write_pipe(KS.lts_pipe,&pipe_value,1);
-#endif
 			if(cbuf[cbufcnt-1] != ' ')
 			{
 				offset=0;
@@ -1825,43 +1687,19 @@ int offset,k;
 				if(cbuf[k] == '.' && ((cbufcnt-offset)-k) !=0)
 				{
 					pipe_value = (PFASCII << PSFONT) + ' ';
-#ifdef SINGLE_THREADED
 					lts_loop(&pipe_value);
-#else
-					write_pipe(KS.lts_pipe,&pipe_value,1);
-#endif
 					pipe_value = (PFASCII << PSFONT) + 'd';
-#ifdef SINGLE_THREADED
 					lts_loop(&pipe_value);
-#else
-					write_pipe(KS.lts_pipe,&pipe_value,1);
-#endif
 					pipe_value = (PFASCII << PSFONT) + 'o';
-#ifdef SINGLE_THREADED
 					lts_loop(&pipe_value);
-#else
-					write_pipe(KS.lts_pipe,&pipe_value,1);
-#endif
 					pipe_value = (PFASCII << PSFONT) + 't';
-#ifdef SINGLE_THREADED
 					lts_loop(&pipe_value);
-#else
-					write_pipe(KS.lts_pipe,&pipe_value,1);
-#endif
 					pipe_value = (PFASCII << PSFONT) + ' ';
-#ifdef SINGLE_THREADED
 					lts_loop(&pipe_value);
-#else
-					write_pipe(KS.lts_pipe,&pipe_value,1);
-#endif
 					k++;
 				}
 				pipe_value = (PFASCII << PSFONT) + cbuf[k];
-#ifdef SINGLE_THREADED
 				lts_loop(&pipe_value);
-#else
-				write_pipe(KS.lts_pipe,&pipe_value,1);
-#endif
 				k++;
 #ifdef DEBUGPARS
 				printf("CMD_PARS: sendat: sending1 %c %d \n",cbuf[k-1],c);
@@ -1875,11 +1713,7 @@ int offset,k;
 			if(offset ==1)
 			{
 				pipe_value = (PFASCII << PSFONT) + ' ';
-#ifdef SINGLE_THREADED
 				lts_loop(&pipe_value);
-#else
-				write_pipe(KS.lts_pipe,&pipe_value,1);
-#endif
 				/*              pipe_value = (PFASCII << PSFONT) + 0xb;
 				write_pipe(KS.lts_pipe,&pipe_value,1);*/
 			}
@@ -1887,22 +1721,14 @@ int offset,k;
 		else if(pcnt>999 )
 		{
 			pipe_value = (PFASCII << PSFONT) + ' ';
-#ifdef SINGLE_THREADED
 			lts_loop(&pipe_value);
-#else
-			write_pipe(KS.lts_pipe,&pipe_value,1);
-#endif
 			
 			for(k=0;(cbufcnt)-k;k++)
 			{
 				if(cbuf[k] != '.')
 				{
 					pipe_value = (PFASCII << PSFONT) + cbuf[k];
-#ifdef SINGLE_THREADED
 					lts_loop(&pipe_value);
-#else
-					write_pipe(KS.lts_pipe,&pipe_value,1);
-#endif
 				}
 				
 #ifdef DEBUGPARS
@@ -1921,21 +1747,13 @@ int offset,k;
 			for(k=0;(cbufcnt)-k;k++)
 			{
 				pipe_value = (PFASCII << PSFONT) + cbuf[k];
-#ifdef SINGLE_THREADED
 				lts_loop(&pipe_value);
-#else
-				write_pipe(KS.lts_pipe,&pipe_value,1);
-#endif
 #ifdef DEBUGPARS
 				printf("CMD_PARS: sendat: sending5 %c %d \n",cbuf[k],cbuf[k]);
 #endif
 			}
 			pipe_value = (PFASCII << PSFONT) + ' ';
-#ifdef SINGLE_THREADED
 			lts_loop(&pipe_value);
-#else
-			write_pipe(KS.lts_pipe,&pipe_value,1);
-#endif
 		}
 		cbufcnt=0;
 		

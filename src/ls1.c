@@ -227,10 +227,7 @@ int ismight();
 #define ALWAYS  4                       /* Always kept.                 */
 #define PHONEME 5                       /* An out of band signal.       */
 //int noun_cnt;
-#ifndef SINGLE_THREADED
-extern  P_PIPE  linp;
-extern  P_PIPE  kinp;
-#endif
+
 #ifdef ACNA2
 extern int namef;
 #endif

@@ -342,17 +342,9 @@ int start_flush(short serial_mode) {
  */
 	KS.spc_sync.value = 0;
 	temp = ((PFASCII<<PSFONT)+0xb);
-#ifdef SINGLE_THREADED
 	lts_loop(&temp);
-#else
-	write_pipe(KS.lts_pipe,&temp,1);
-#endif
 	temp = SYNC;
-#ifdef SINGLE_THREADED
 	lts_loop(&temp);
-#else
-	write_pipe(KS.lts_pipe,&temp,1);
-#endif
 //	kernel_enable(flags);
 #ifndef	SIMULATOR
 	wait_semaphore(&KS.spc_sync);

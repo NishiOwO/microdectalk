@@ -52,18 +52,12 @@ extern int lts(LETTER  *llp, LETTER  *rlp, int def_lang, int sel_lang);
 extern int id_name(LETTER *llp, LETTER *rlp);
 extern int default_lang(unsigned int lang_code, unsigned int ready_code);
 
-#ifndef SINGLE_THREADED
-P_PIPE	linp;
-P_PIPE	kinp;
-#endif
-
-int lsmain()
-{
+int lsmain() {
 	init_lang();
 	default_lang(LANG_english,LANG_lts_ready);
 	default_lang(LANG_english,LANG_both_ready);
 	return (0);
-}	
+}
 
 int do_lts(LETTER *lp2, LETTER *lp1)
 {

@@ -620,22 +620,14 @@ short unsigned int pipe_value;
 						printf("# %c %d, %d \n",clausebuf[outcntr].clausebuf[outcntr],outcntr);
 #endif
  						pipe_value = (PFASCII<<PSFONT)+clausebuf[outcntr];
-#ifdef SINGLE_THREADED
 						lts_loop(&pipe_value);
-#else
- 						write_pipe(KS.lts_pipe,&pipe_value,1);
-#endif
 					}
  					/*re-inti*/
  					
  					if (c == 0x0b)	/* fix for double Ctrl-k */
  					{
  						pipe_value = (PFASCII<<PSFONT)+0x0b;
-#ifdef SINGLE_THREADED
 						lts_loop(&pipe_value);
-#else
- 						write_pipe(KS.lts_pipe,&pipe_value,1);
-#endif
  					} 						
 					clausebuf[0]=' ';
  					incntr=1;  

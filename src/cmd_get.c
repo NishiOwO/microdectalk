@@ -56,18 +56,11 @@ extern void flush_done();
 unsigned char pwrbeep[]="\013 [:tone 500 500] \013";
 #endif /*DTEX*/
 
-#ifdef SINGLE_THREADED
 unsigned int getseq(unsigned char inchar)
-#else
-unsigned int getseq()
-#endif
 {
 	register int    c,ac;
 //	int     pipe_value;
 
-#ifndef SINGLE_THREADED
-	while(true)
-#endif
 	{
 		ac=inchar;
 		if (KS.halting)
@@ -118,11 +111,7 @@ unsigned int getseq()
 				// always pass a sync on through!
 				if (ac == 0xb)  //VT
 					return(ac);				
-#ifdef SINGLE_THREADED
 				return(0);
-#else
-				continue;
-#endif
 				}
 			else if(KS.cmd_flush == CMD_flush_sync)
 				{
@@ -143,11 +132,7 @@ unsigned int getseq()
 #endif /*dtex*/
 					}
 				else if(ac != CMD_sync_char)
-#ifdef SINGLE_THREADED
 				return(0);
-#else
-					continue;
-#endif
 			}
 			flush_done();
 			while(KS.spc_flush_reset != 0)
@@ -168,11 +153,7 @@ unsigned int getseq()
 			putc(XON);                                             
 #endif /*dtex*/
 			
-#ifdef SINGLE_THREADED
 				return(0);
-#else
-			continue;
-#endif
 		}
 /*
  *  first, look for escape codes ... note that these do no nest if you

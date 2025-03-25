@@ -87,18 +87,10 @@ int type;
 			while(*es)
 				{
 				pipe_value[0] = (PFASCII<<PSFONT) + *es++;
-#ifdef SINGLE_THREADED
 				lts_loop(pipe_value);
-#else
-				write_pipe(KS.lts_pipe,pipe_value,1);
-#endif
 				}
 			pipe_value[0] = (PFASCII<<PSFONT) + 0xb;
-#ifdef SINGLE_THREADED
 			lts_loop(pipe_value);
-#else
-			write_pipe(KS.lts_pipe,pipe_value,1);
-#endif
 			break;
 #ifndef SIMULATOR
 		case	ERROR_tone		:

@@ -371,14 +371,6 @@ struct share_data {
 	volatile        SEMAPHORE                                isa_sem;                                                /* isa interface interrupt */
 	volatile        SEMAPHORE                                flush_sem;                                      /* flush synchronization */
 	volatile unsigned int                                    isa_status;                                     /* status of module on isa bus */
-/*
- *  current language interprocess pipes ...
- */
-
-#ifndef SINGLE_THREADED
-	P_PIPE                                                   lts_pipe;                                       /* lts pipe input */
-	P_PIPE                                                   ph_pipe;                                                /* ph pipe input */
-#endif
 
 /*
  *  language specific pipes and enables ...

@@ -1,10 +1,6 @@
 //extern	int main(unsigned int data_seg,unsigned int stack_start);
 extern	int icommand(void );
-#ifdef SINGLE_THREADED
 extern	int __far dtpc_cmd(unsigned char inchar);
-#else
-extern	int __far dtpc_cmd(void);
-#endif
 extern	void process_char(unsigned int c);
 extern	void match_command(unsigned int c);
 extern	void build_param(unsigned int c);
@@ -20,12 +16,8 @@ extern	int lookup_arpabet(unsigned int ph1,unsigned int ph2);
 extern	int param_check(unsigned int c);
 extern	int flush_phone(void);
 extern	void match_phoneme(unsigned int c);
-#ifdef SINGLE_THREADED
 extern	unsigned int getseq(unsigned char inchar);
 void lts_loop(unsigned short *input);
-#else
-extern	unsigned int getseq(void);
-#endif
 extern	int cmd_stress(void);
 extern	void type_out(unsigned int c);
 extern	int cmd_tone(void);
