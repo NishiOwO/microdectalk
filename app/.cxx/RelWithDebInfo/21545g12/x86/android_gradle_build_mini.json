@@ -1,0 +1,27 @@
+{
+  "buildFiles": [
+    "/home/user/AndroidStudioProjects/MicroDECtalkTest/app/src/main/cpp/CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "/home/user/Android/Sdk/cmake/3.22.1/bin/ninja",
+      "-C",
+      "/home/user/AndroidStudioProjects/MicroDECtalkTest/app/.cxx/RelWithDebInfo/21545g12/x86",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "/home/user/Android/Sdk/cmake/3.22.1/bin/ninja",
+    "-C",
+    "/home/user/AndroidStudioProjects/MicroDECtalkTest/app/.cxx/RelWithDebInfo/21545g12/x86",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {
+    "epsonapi::@6890427a1f51a3e7e1df": {
+      "artifactName": "epsonapi",
+      "abi": "x86",
+      "output": "/home/user/AndroidStudioProjects/MicroDECtalkTest/app/build/intermediates/cxx/RelWithDebInfo/21545g12/obj/x86/libepsonapi.so",
+      "runtimeFiles": []
+    }
+  }
+}

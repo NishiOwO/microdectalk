@@ -1,0 +1,1 @@
+/home/user/AndroidStudioProjects/MicroDECtalkTest/app/src/main/cpp/CMakeLists.txt

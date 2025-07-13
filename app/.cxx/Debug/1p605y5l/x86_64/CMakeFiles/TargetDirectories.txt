@@ -1,0 +1,3 @@
+/home/user/AndroidStudioProjects/MicroDECtalkTest/app/.cxx/Debug/1p605y5l/x86_64/CMakeFiles/epsonapi.dir
+/home/user/AndroidStudioProjects/MicroDECtalkTest/app/.cxx/Debug/1p605y5l/x86_64/CMakeFiles/edit_cache.dir
+/home/user/AndroidStudioProjects/MicroDECtalkTest/app/.cxx/Debug/1p605y5l/x86_64/CMakeFiles/rebuild_cache.dir

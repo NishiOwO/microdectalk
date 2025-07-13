@@ -1,0 +1,1 @@
+/home/user/AndroidStudioProjects/MicroDECtalkTest/app/build/intermediates/cxx/RelWithDebInfo/21545g12/obj/x86_64
